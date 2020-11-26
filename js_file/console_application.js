@@ -1,4 +1,13 @@
+'use strict';
+
 let numberOfFilms;
+const personalMovieDB = {
+    count: '',
+    movies: {},
+    actors: {},
+    genres: [],
+    private: false,
+};
 
 function start() {
     numberOfFilms = +prompt('Сколько фильмов Вы посмотрели?', '');
@@ -6,14 +15,6 @@ function start() {
         numberOfFilms = +prompt('Сколько фильмов Вы посмотрели?', '');
     }
 }
-
-const personalMovieDB = {
-    count: numberOfFilms,
-    movies: {},
-    actors: {},
-    genres: [],
-    private: false,
-};
 
 function rememberMyFilms() {
     for (let i = 0; i < 3; i++) {
@@ -29,13 +30,14 @@ function rememberMyFilms() {
 }
 
 function detectedPersonalLevel() {
+    personalMovieDB.count = numberOfFilms;
     (personalMovieDB.count < 10) ? alert('Вы посмотрели мало фильмов.'):
         (personalMovieDB.count >= 10 && personalMovieDB.count <= 30) ? alert('Вы средний зритель.') :
         alert('Вы много смотрите кино.');
 }
 
-function writeYourGenres(){
-    for (let i = 0; i <= 2; i++ ) {
+function writeYourGenres() {
+    for (let i = 0; i <= 2; i++) {
         const answer = prompt(`Ваш любимый жанр номер ${i + 1}: `, '');
         if (answer != '' && answer != null && +isNaN(answer)) {
             personalMovieDB.genres[i] = answer;
@@ -47,10 +49,30 @@ function writeYourGenres(){
 
 let showMyDB = () => personalMovieDB.private;
 
+function toggleVisibleMyDB() {
+    let question = confirm(`Будем менять свойство "private" 
+    сейчас оно в значении ${personalMovieDB.private}?`);
+    if (question === true) {
+        personalMovieDB.private = !personalMovieDB.private;
+        alert('Просмотр базы данных запрещен.');
+
+    } else {
+        personalMovieDB.private = personalMovieDB.private;
+        alert('Просмотр базы данных разрешен.');
+    }
+
+}
+
+toggleVisibleMyDB();
+start();
+
 if (showMyDB() === false) {
-    start();
     rememberMyFilms();
     writeYourGenres();
     detectedPersonalLevel();
     console.log(personalMovieDB);
+} else {
+    rememberMyFilms();
+    writeYourGenres();
+    detectedPersonalLevel();
 }
