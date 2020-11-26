@@ -52,6 +52,5 @@ if (showMyDB() === false) {
     rememberMyFilms();
     writeYourGenres();
     detectedPersonalLevel();
+    console.log(personalMovieDB);
 }
-
-console.log(personalMovieDB);
